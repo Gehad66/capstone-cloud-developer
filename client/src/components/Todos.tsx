@@ -1,6 +1,8 @@
 import dateFormat from 'dateformat'
 import { History } from 'history'
 import update from 'immutability-helper'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as React from 'react'
 import {
   Button,
@@ -54,6 +56,8 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
           name: this.state.newTodoName,
           dueDate
         })
+        toast("TODO Created");
+
         this.setState({
           todos: [...this.state.todos, newTodo],
           newTodoName: ''
@@ -118,6 +122,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
   }
 
   renderCreateTodoInput() {
+
     return (
       <Grid.Row>
         <Grid.Column width={16}>
@@ -135,6 +140,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
             onChange={this.handleNameChange}
           />
         </Grid.Column>
+        <ToastContainer />
         <Grid.Column width={16}>
           <Divider />
         </Grid.Column>
@@ -161,6 +167,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
   }
 
   renderTodosList() {
+    const notifyDelete = () => toast("TODO deleted");
     return (
       <Grid padded>
         {this.state.todos.map((todo, pos) => {
@@ -191,10 +198,11 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
                 <Button
                   icon
                   color="red"
-                  onClick={() => this.onTodoDelete(todo.todoId)}
+                  onClick={() => {notifyDelete(); this.onTodoDelete(todo.todoId);}}
                 >
                   <Icon name="delete" />
                 </Button>
+                <ToastContainer />
               </Grid.Column>
               {todo.attachmentUrl && (
                 <Image src={todo.attachmentUrl} size="small" wrapped />
