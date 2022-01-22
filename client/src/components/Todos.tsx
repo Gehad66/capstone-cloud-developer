@@ -87,6 +87,11 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
         dueDate: todo.dueDate,
         done: !todo.done
       })
+      if(!todo.done){
+        toast("TODO Done")
+      }else{
+        toast("TODO Undone")
+      }
       this.setState({
         todos: update(this.state.todos, {
           [pos]: { done: { $set: !todo.done } }
@@ -179,6 +184,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
                   checked={todo.done}
                 />
               </Grid.Column>
+              <ToastContainer />
               <Grid.Column width={10} verticalAlign="middle">
                 {todo.name}
               </Grid.Column>
